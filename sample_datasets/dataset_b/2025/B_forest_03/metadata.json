@@ -1,0 +1,16 @@
+{
+  "sample_id": "B_forest_03",
+  "region_name": "Topslip_Teak_Sanctuary",
+  "year": 2025,
+  "target_bounds": [
+    76.822,
+    10.475,
+    76.842,
+    10.495
+  ],
+  "time_window": [
+    "2025-01-01",
+    "2025-04-30"
+  ],
+  "ecosystem": "Tropical Evergreen / Deciduous"
+}

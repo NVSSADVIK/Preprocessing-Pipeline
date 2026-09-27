@@ -1,0 +1,6 @@
+sample_id,name,min_lon,min_lat,max_lon,max_lat,file_path
+A_tile_01,Peelamedu_Urban,76.99579999999999,11.0168,77.0158,11.0368,sample_datasets/dataset_a/tiles/A_tile_01.geojson
+A_tile_02,Gandhipuram_Central,76.958,11.008000000000001,76.97800000000001,11.028,sample_datasets/dataset_a/tiles/A_tile_02.geojson
+A_tile_03,RS_Puram_Commercial,76.93499999999999,10.998,76.955,11.017999999999999,sample_datasets/dataset_a/tiles/A_tile_03.geojson
+A_tile_04,Koundampalayam_North,76.93199999999999,11.032,76.952,11.052,sample_datasets/dataset_a/tiles/A_tile_04.geojson
+A_tile_05,Singanallur_Industrial,77.008,10.988,77.028,11.008,sample_datasets/dataset_a/tiles/A_tile_05.geojson

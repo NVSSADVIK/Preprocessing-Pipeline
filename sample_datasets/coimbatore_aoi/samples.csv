@@ -1,0 +1,6 @@
+sample_id,name,min_lon,min_lat,max_lon,max_lat,center_lon,center_lat,time_start,time_end,file_path
+sample_0000,Coimbatore_Urban_Core,76.949907,11.011053,76.961694,11.022547,76.9558,11.0168,2025-11-01,2026-02-28,sample_datasets/coimbatore_aoi/tiles/sample_0000.geojson
+sample_0001,Coimbatore_North_Agri,76.982505,11.072754,76.994296,11.084246,76.9884,11.0785,2025-11-01,2026-02-28,sample_datasets/coimbatore_aoi/tiles/sample_0001.geojson
+sample_0002,Singanallur_Lake_Zone,77.015106,10.996454,77.026894,11.007946,77.021,11.0022,2025-11-01,2026-02-28,sample_datasets/coimbatore_aoi/tiles/sample_0002.geojson
+sample_0003,Saravanampatti_Tech_Park,76.995104,11.076254,77.006896,11.087746,77.001,11.082,2025-11-01,2026-02-28,sample_datasets/coimbatore_aoi/tiles/sample_0003.geojson
+sample_0004,Sulur_Rural_Farmlands,77.119104,11.019257,77.130897,11.030743,77.125,11.025,2025-11-01,2026-02-28,sample_datasets/coimbatore_aoi/tiles/sample_0004.geojson

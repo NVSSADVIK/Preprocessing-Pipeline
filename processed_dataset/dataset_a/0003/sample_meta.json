@@ -1,0 +1,42 @@
+{
+  "sample_id": "A_tile_04",
+  "sample_index": "0003",
+  "coordinates_wgs84": [
+    76.93199999999999,
+    11.032,
+    76.952,
+    11.052
+  ],
+  "utm_epsg": 32643,
+  "utm_bbox": [
+    711070.0,
+    1220200.0,
+    713240.0,
+    1222430.0
+  ],
+  "dates_aggregated": 7,
+  "timestamps": [
+    "2025-11-03",
+    "2025-12-08",
+    "2025-12-23",
+    "2025-12-28",
+    "2026-01-22",
+    "2026-02-06",
+    "2026-02-26"
+  ],
+  "band_names": [
+    "B02",
+    "B03",
+    "B04",
+    "B08"
+  ],
+  "output_tiffs": [
+    "processed_dataset\\dataset_a\\0003\\composite_reflectance.tif",
+    "processed_dataset\\dataset_a\\0003\\composite_norm.tif",
+    "processed_dataset\\dataset_a\\0003\\1\\B02.tif",
+    "processed_dataset\\dataset_a\\0003\\2\\B03.tif",
+    "processed_dataset\\dataset_a\\0003\\3\\B04.tif",
+    "processed_dataset\\dataset_a\\0003\\4\\B08.tif"
+  ],
+  "visualization": "processed_dataset\\dataset_a\\0003\\visualization.png"
+}

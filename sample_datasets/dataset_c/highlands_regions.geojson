@@ -1,0 +1,205 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "C_highland_01",
+        "label": "Ooty_Botanical_Valley",
+        "elevation_m": 2200,
+        "season": "Winter-Spring 2026",
+        "time_interval": [
+          "2026-01-01",
+          "2026-03-31"
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.701,
+              11.402000000000001
+            ],
+            [
+              76.721,
+              11.402000000000001
+            ],
+            [
+              76.721,
+              11.422
+            ],
+            [
+              76.701,
+              11.422
+            ],
+            [
+              76.701,
+              11.402000000000001
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "C_highland_02",
+        "label": "Coonoor_Tea_Plantation",
+        "elevation_m": 2200,
+        "season": "Winter-Spring 2026",
+        "time_interval": [
+          "2026-01-01",
+          "2026-03-31"
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.785,
+              11.343
+            ],
+            [
+              76.805,
+              11.343
+            ],
+            [
+              76.805,
+              11.363
+            ],
+            [
+              76.785,
+              11.363
+            ],
+            [
+              76.785,
+              11.343
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "C_highland_03",
+        "label": "Kotagiri_Highland_Ridge",
+        "elevation_m": 2200,
+        "season": "Winter-Spring 2026",
+        "time_interval": [
+          "2026-01-01",
+          "2026-03-31"
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.86999999999999,
+              11.41
+            ],
+            [
+              76.89,
+              11.41
+            ],
+            [
+              76.89,
+              11.43
+            ],
+            [
+              76.86999999999999,
+              11.43
+            ],
+            [
+              76.86999999999999,
+              11.41
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "C_highland_04",
+        "label": "Doddabetta_Peak_Slopes",
+        "elevation_m": 2200,
+        "season": "Winter-Spring 2026",
+        "time_interval": [
+          "2026-01-01",
+          "2026-03-31"
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.72699999999999,
+              11.391
+            ],
+            [
+              76.747,
+              11.391
+            ],
+            [
+              76.747,
+              11.411
+            ],
+            [
+              76.72699999999999,
+              11.411
+            ],
+            [
+              76.72699999999999,
+              11.391
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "C_highland_05",
+        "label": "Pykara_Lake_Catchment",
+        "elevation_m": 2200,
+        "season": "Winter-Spring 2026",
+        "time_interval": [
+          "2026-01-01",
+          "2026-03-31"
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.592,
+              11.435
+            ],
+            [
+              76.61200000000001,
+              11.435
+            ],
+            [
+              76.61200000000001,
+              11.455
+            ],
+            [
+              76.592,
+              11.455
+            ],
+            [
+              76.592,
+              11.435
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

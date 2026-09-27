@@ -1,0 +1,12 @@
+{
+  "dataset_name": "coimbatore_aoi",
+  "description": "5 Sentinel-2 sample target regions in Tamil Nadu, India",
+  "num_samples": 5,
+  "bands": [
+    "B02",
+    "B03",
+    "B04",
+    "B08"
+  ],
+  "resolution_m": 10
+}

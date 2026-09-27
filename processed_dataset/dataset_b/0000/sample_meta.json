@@ -1,0 +1,42 @@
+{
+  "sample_id": "B_forest_01",
+  "sample_index": "0000",
+  "coordinates_wgs84": [
+    76.945,
+    10.315,
+    76.965,
+    10.335
+  ],
+  "utm_epsg": 32643,
+  "utm_bbox": [
+    712990.0,
+    1140890.0,
+    715170.0,
+    1143110.0
+  ],
+  "dates_aggregated": 7,
+  "timestamps": [
+    "2025-11-03",
+    "2025-12-08",
+    "2025-12-23",
+    "2025-12-28",
+    "2026-01-22",
+    "2026-02-06",
+    "2026-02-26"
+  ],
+  "band_names": [
+    "B02",
+    "B03",
+    "B04",
+    "B08"
+  ],
+  "output_tiffs": [
+    "processed_dataset\\dataset_b\\0000\\composite_reflectance.tif",
+    "processed_dataset\\dataset_b\\0000\\composite_norm.tif",
+    "processed_dataset\\dataset_b\\0000\\1\\B02.tif",
+    "processed_dataset\\dataset_b\\0000\\2\\B03.tif",
+    "processed_dataset\\dataset_b\\0000\\3\\B04.tif",
+    "processed_dataset\\dataset_b\\0000\\4\\B08.tif"
+  ],
+  "visualization": "processed_dataset\\dataset_b\\0000\\visualization.png"
+}
