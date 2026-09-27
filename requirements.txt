@@ -1,0 +1,7 @@
+eo-learn-core==1.5.7  # core only: the full `eo-learn` pulls eolearn.io -> rasterio (blocked on some Windows setups)
+sentinelhub==3.12.0
+setuptools<81         # eo-learn-core -> pyfilesystem2 (`fs`) still imports pkg_resources
+tifffile>=2023.1
+python-dotenv>=1.0
+shapely>=2.0
+numpy>=1.26
