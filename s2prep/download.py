@@ -58,9 +58,12 @@ class SentinelHubDownloadTask(EOTask):
                 groups[-1].append(t)
             else:
                 groups.append([t])
-        if self.max_dates and len(groups) > self.max_dates:  # fewer downloads = much faster; keep the clearest scenes
-            best = sorted(groups, key=lambda g: min(clouds[t] for t in g))[: self.max_dates]
-            groups = sorted(best, key=lambda g: g[0])
+        if self.max_dates and len(groups) > self.max_dates:
+            # Sort candidate groups by cloud cover
+            sorted_groups = sorted(groups, key=lambda g: min(clouds[t] for t in g))
+            # Pick (max_dates - 1) clearest dates for composite + 1 representative cloudy date for mask evaluation
+            selected = sorted(sorted_groups[: self.max_dates - 1] + [sorted_groups[-1]], key=lambda g: g[0])
+            groups = selected
         return groups
 
     def execute(self, eopatch=None, *, bbox=None, time_interval=None):

@@ -245,6 +245,7 @@ def run_multi_pipeline(config: MultiPipelineConfig) -> Dict[str, List[Dict[str, 
             target_size=config.target_size,
             max_samples=config.max_samples_per_dataset,
             max_dates=config.max_dates,
+            maxcc=config.maxcc,
             threads=config.threads,
         )
         preprocessor = SentinelPreprocessor(dataset_cfg)

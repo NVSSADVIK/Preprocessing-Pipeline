@@ -170,7 +170,7 @@ class PipelineConfig:
     bands: Tuple[str, ...] = ("B02", "B03", "B04", "B08")  # Blue, Green, Red, NIR (10m)
     resolution: int = 10                                     # 10 metres/pixel
     target_size: Tuple[int, int] = (256, 256)               # Required downstream size (256x256)
-    maxcc: float = 0.4                                       # Cloud cover threshold
+    maxcc: float = 0.65                                      # Cloud cover threshold (allows candidate scenes with clouds)
     min_valid_fraction: float = 0.5                          # Min valid pixel fraction
     reflectance_max: float = 0.3                             # Normalization upper bound
     max_samples: int = 5                                     # Capped to 5 samples per run
@@ -360,10 +360,9 @@ class SentinelPreprocessor:
 
         # 2. Cloud masking & median compositing
         eopatch = self.valid_mask_task.execute(eopatch)
-        try:
-            eopatch = self.filter_task.execute(eopatch)
-        except ValueError:
-            pass  # Fallback to all dates if filter is too strict
+        # Note: MedianCompositeTask handles masking per pixel (np.where(valid, bands, np.nan)),
+        # discarding cloud/shadow pixels while compositing clear pixels across time.
+        # We retain the cloudy timestamp in eopatch for true comparison visualization.
         eopatch = self.median_task.execute(eopatch)
         eopatch = self.norm_task.execute(eopatch)
 
@@ -440,9 +439,20 @@ class SentinelPreprocessor:
         lo, hi = np.percentile(ref_rgb, [2, 98])
 
         before_rgb = to_rgb(bands[t_cloudiest], lo, hi)
-        masked_rgb = before_rgb.copy()
-        cloud_mask = ~valid[t_cloudiest]
-        masked_rgb[cloud_mask] = 0.5 * masked_rgb[cloud_mask] + 0.5 * np.array([1.0, 0.0, 0.0])
+        masked_rgb = before_rgb.copy() * 0.45  # Dim background for high-contrast mask visibility
+
+        scl_frame = eopatch.mask["SCL"][t_cloudiest, ..., 0]
+        is_cloud = np.isin(scl_frame, [8, 9, 10])  # Medium prob, high prob, cirrus
+        is_shadow = np.isin(scl_frame, [3])        # Cloud shadows
+        is_invalid = np.isin(scl_frame, [0, 1])    # Defective / no data
+
+        # Highlight detected clouds in vivid bright red
+        masked_rgb[is_cloud] = np.array([1.0, 0.15, 0.15])
+        # Highlight cloud shadows in vivid amber / yellow
+        masked_rgb[is_shadow] = np.array([1.0, 0.75, 0.0])
+        # Highlight invalid in magenta
+        masked_rgb[is_invalid] = np.array([0.85, 0.0, 0.85])
+
         after_rgb = to_rgb(after, lo, hi)
 
         date_str = eopatch.timestamps[t_cloudiest].strftime("%Y-%m-%d")
@@ -450,13 +460,16 @@ class SentinelPreprocessor:
         c_lat = sample["latitude"]
         c_lon = sample["longitude"]
 
+        c_pct = float(is_cloud.mean() * 100)
+        s_pct = float(is_shadow.mean() * 100)
+
         fig, axes = plt.subplots(1, 3, figsize=(15, 5))
         axes[0].imshow(before_rgb)
-        axes[0].set_title(f"BEFORE: Raw Sentinel-2 Scene ({date_str})\n{valid_frac[t_cloudiest]:.1%} Clear Pixels", fontsize=11, fontweight="bold")
+        axes[0].set_title(f"BEFORE: Raw Sentinel-2 Scene\n({date_str} - {100.0 - c_pct - s_pct:.1f}% Clear)", fontsize=11, fontweight="bold")
         axes[0].axis("off")
 
         axes[1].imshow(masked_rgb)
-        axes[1].set_title("CLOUD MASK OVERLAY\n(SCL Cloud & Noise in Red)", fontsize=11, fontweight="bold")
+        axes[1].set_title(f"CLOUD & SHADOW MASK\n(Red: Cloud {c_pct:.1f}%, Yellow: Shadow {s_pct:.1f}%)", fontsize=11, fontweight="bold")
         axes[1].axis("off")
 
         axes[2].imshow(after_rgb)

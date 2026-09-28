@@ -59,6 +59,12 @@ The deliverables are:
 4. **2D Array Dimension Unpacking Bug in `s2prep/export.py`**:
    - *Problem*: `write_geotiff` failed when exporting individual 2D bands (expected 3 dimensions).
    - *Fix*: Added `if arr.ndim == 2: arr = arr[..., None]`.
+5. **Mask Segment Blank / Inactive in `comparison.jpg`**:
+   - *Problem*: `SentinelHubDownloadTask._find_groups` selected only the 3 clearest acquisitions in the year (which had 0% clouds), and `FilterByValidFractionTask` dropped any cloudy pass before comparison visualization, leaving 0.0% clouds detected and causing the mask panel to appear blank or identical to the clear image.
+   - *Fix*:
+     1. Updated `s2prep/download.py` to pick the 2 clearest dates + 1 representative cloudy date (within `maxcc=0.65`) so real clouds and shadows exist in the stack.
+     2. Bypassed `FilterByValidFractionTask` during processing because `MedianCompositeTask` already handles valid masking per pixel (`np.where(valid, bands, np.nan)`).
+     3. Upgraded `_generate_comparison_jpg` to dim the background (45%) and apply high-contrast colors: vivid red (`[1.0, 0.15, 0.15]`) for clouds, amber/yellow (`[1.0, 0.75, 0.0]`) for shadows, and display exact percentage breakdowns in subtitles.
 
 ---
 
@@ -72,6 +78,7 @@ The deliverables are:
 - [x] Standardized project structure into clean `input/` and `output/`.
 - [x] Enforced strict **256x256** output dimensions across all exported GeoTIFFs.
 - [x] Saved 3-panel true satellite comparison previews as `.jpg` (`comparison.jpg`).
+- [x] Fixed Mask segment in `comparison.jpg` with high-contrast SCL cloud (vivid red) and shadow (vivid amber/yellow) visualization and real cloudy scene retention.
 - [x] Numbered subfolders (`1/`, `2/`, `3/`, `4/`) for individual bands and flattened time-series for Dataset B.
 - [x] Executed `single_dataset_pipeline.py` & `01_single_dataset_pipeline.ipynb` (5/5 verified live).
 - [x] Executed `multi_dataset_pipeline.py` & `02_multi_dataset_pipeline.ipynb` (15/15 verified live).
