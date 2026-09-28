@@ -79,6 +79,9 @@ The deliverables are:
 - [x] Enforced strict **256x256** output dimensions across all exported GeoTIFFs.
 - [x] Saved 3-panel true satellite comparison previews as `.jpg` (`comparison.jpg`).
 - [x] Fixed Mask segment in `comparison.jpg` with high-contrast SCL cloud (vivid red) and shadow (vivid amber/yellow) visualization and real cloudy scene retention.
+- [x] Enforced candidate "Before" scene clear threshold (>= 20–30% clear) so images are never heavily occluded or ambiguous.
+- [x] Comprehensive `README.md` created for GitHub with full visual gallery of output comparisons, coordinates, and schemas.
+- [x] Created `.env.example` template and updated `.gitignore` to prevent credential leaks and ignore heavy `*.tif` rasters.
 - [x] Numbered subfolders (`1/`, `2/`, `3/`, `4/`) for individual bands and flattened time-series for Dataset B.
 - [x] Executed `single_dataset_pipeline.py` & `01_single_dataset_pipeline.ipynb` (5/5 verified live).
 - [x] Executed `multi_dataset_pipeline.py` & `02_multi_dataset_pipeline.ipynb` (15/15 verified live).

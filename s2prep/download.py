@@ -1,10 +1,3 @@
-"""rasterio-free replacement for eolearn.io.SentinelHubInputTask.
-
-Why: `import eolearn.io` imports rasterio at package level, so if rasterio's DLLs are blocked
-(Windows Application Control / Smart App Control) nothing from eolearn.io can be used.
-This task uses only sentinelhub-py (Catalog + Process API) and eolearn.core, and produces the
-same EOPatch layout: DATA/BANDS, MASK/SCL, MASK/dataMask, timestamps.
-"""
 import datetime as dt
 from concurrent.futures import ThreadPoolExecutor
 
@@ -59,10 +52,21 @@ class SentinelHubDownloadTask(EOTask):
             else:
                 groups.append([t])
         if self.max_dates and len(groups) > self.max_dates:
-            # Sort candidate groups by cloud cover
+            # Sort candidate groups by cloud cover ascending (lowest clouds first)
             sorted_groups = sorted(groups, key=lambda g: min(clouds[t] for t in g))
-            # Pick (max_dates - 1) clearest dates for composite + 1 representative cloudy date for mask evaluation
-            selected = sorted(sorted_groups[: self.max_dates - 1] + [sorted_groups[-1]], key=lambda g: g[0])
+            # Select (max_dates - 1) clearest dates for high-quality compositing
+            clearest_groups = sorted_groups[: self.max_dates - 1]
+
+            # Filter remaining candidates to ensure at least 30-40% clear ground (cloud cover between 15% and 57.5%)
+            # Avoid overly dense/ambiguous clouds (> 57.5% clouds) so the tile consistently has >= 25-30% clear pixels
+            valid_cloudy = [g for g in sorted_groups if min(clouds[t] for t in g) <= 57.5]
+            moderate_cloudy = [g for g in valid_cloudy if min(clouds[t] for t in g) >= 15.0]
+            cloudy_pick = moderate_cloudy[-1] if moderate_cloudy else (valid_cloudy[-1] if valid_cloudy else sorted_groups[0])
+
+            if cloudy_pick not in clearest_groups:
+                selected = sorted(clearest_groups + [cloudy_pick], key=lambda g: g[0])
+            else:
+                selected = sorted_groups[: self.max_dates]
             groups = selected
         return groups
 

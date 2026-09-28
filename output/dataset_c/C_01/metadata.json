@@ -1,0 +1,36 @@
+{
+  "sample_id": "C_01",
+  "latitude": 11.411999999999999,
+  "longitude": 76.711,
+  "bbox_rectangle": [
+    76.6993,
+    11.4005,
+    76.7227,
+    11.4235
+  ],
+  "time_interval": [
+    "2026-01-01",
+    "2026-03-31"
+  ],
+  "output_shape": [
+    256,
+    256,
+    4
+  ],
+  "utm_epsg": 32643,
+  "dates_composited": 3,
+  "timestamps": [
+    "2026-01-22T05:25:47.749000",
+    "2026-02-06T05:25:51.993000",
+    "2026-02-21T05:25:48.628000"
+  ],
+  "output_files": [
+    "output\\dataset_c\\C_01\\composite_reflectance.tif",
+    "output\\dataset_c\\C_01\\composite_norm.tif",
+    "output\\dataset_c\\C_01\\1\\B02.tif",
+    "output\\dataset_c\\C_01\\2\\B03.tif",
+    "output\\dataset_c\\C_01\\3\\B04.tif",
+    "output\\dataset_c\\C_01\\4\\B08.tif"
+  ],
+  "comparison_image": "output\\dataset_c\\C_01\\comparison.jpg"
+}

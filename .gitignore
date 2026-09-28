@@ -1,16 +1,53 @@
-# Security: Never commit environment variables or secrets
+# ==============================================================================
+# Security: Never commit environment credentials or secrets
+# ==============================================================================
 .env
 *.env
 .env.*
+.env.local
+!.env.example
 
-# Output data and caches
-output/
+# ==============================================================================
+# Satellite Data & Heavy Rasters: Ignore large GeoTIFF binaries
+# ==============================================================================
+*.tif
+*.tiff
+output/**/*.tif
+output/**/*.tiff
 data/
 cache/
 logs/
 
-# Python & IDE artifacts
+# ==============================================================================
+# Python & Virtual Environments
+# ==============================================================================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+
+# ==============================================================================
+# IDEs & Notebooks
+# ==============================================================================
 .vscode/
+.idea/
+*.swp
+*.swo
+.ipynb_checkpoints/
+
+# ==============================================================================
+# System & Transient Artifacts
+# ==============================================================================
+.DS_Store
+Thumbs.db
 *.log
+.system_generated/
+scratch/
+.gemini/

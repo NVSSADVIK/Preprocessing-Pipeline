@@ -171,7 +171,7 @@ class PipelineConfig:
     resolution: int = 10                                     # 10 metres/pixel
     target_size: Tuple[int, int] = (256, 256)               # Required downstream size (256x256)
     maxcc: float = 0.65                                      # Cloud cover threshold (allows candidate scenes with clouds)
-    min_valid_fraction: float = 0.5                          # Min valid pixel fraction
+    min_valid_fraction: float = 0.30                         # Min clear/valid pixel fraction (>= 30% clear)
     reflectance_max: float = 0.3                             # Normalization upper bound
     max_samples: int = 5                                     # Capped to 5 samples per run
     max_dates: int = 3                                       # Fast compositing (3 clearest dates)
@@ -301,34 +301,41 @@ class SentinelPreprocessor:
 
         logger.info(f"Querying Copernicus CDSE for '{sid}' at ({lat:.4f}, {lon:.4f}) over {time_interval}...")
 
-        # Progressive cloud filter search (starting with configured maxcc, then relaxing if needed)
-        for cc_threshold in [self.config.maxcc, 0.6, 0.9]:
+        import time
+        max_retries = 3
+        for attempt in range(max_retries):
             try:
-                download_task = SentinelHubDownloadTask(
-                    data_collection=self.collection,
-                    config=self.sh_config,
-                    bands=self.config.bands,
-                    resolution=self.config.resolution,
-                    maxcc=cc_threshold,
-                    max_dates=self.config.max_dates,
-                    threads=self.config.threads,
-                )
-                patch = download_task.execute(bbox=bbox, time_interval=time_interval)
-                if patch and len(patch.timestamps) > 0:
-                    return patch
-            except ValueError as v_err:
-                logger.warning(f"No scenes at cloud threshold {cc_threshold:.0%}: {v_err}. Retrying with relaxed filter...")
-                continue
-            except Exception as api_err:
-                logger.error(f"CDSE API request failed for '{sid}' ({lat}, {lon}): {api_err}")
+                # Progressive cloud filter search (starting with configured maxcc, then relaxing if needed)
+                for cc_threshold in [self.config.maxcc, 0.6, 0.9]:
+                    try:
+                        download_task = SentinelHubDownloadTask(
+                            data_collection=self.collection,
+                            config=self.sh_config,
+                            bands=self.config.bands,
+                            resolution=self.config.resolution,
+                            maxcc=cc_threshold,
+                            max_dates=self.config.max_dates,
+                            threads=self.config.threads,
+                        )
+                        patch = download_task.execute(bbox=bbox, time_interval=time_interval)
+                        if patch and len(patch.timestamps) > 0:
+                            return patch
+                    except ValueError as v_err:
+                        logger.warning(f"No scenes at cloud threshold {cc_threshold:.0%}: {v_err}. Retrying with relaxed filter...")
+                        continue
                 raise RuntimeError(
-                    f"Copernicus CDSE API download failed for '{sid}' at ({lat}, {lon}): {api_err}"
-                ) from api_err
-
-        raise RuntimeError(
-            f"No Sentinel-2 satellite scenes found on Copernicus CDSE for '{sid}' at ({lat}, {lon}) "
-            f"in time window {time_interval}. Please check observation dates."
-        )
+                    f"No Sentinel-2 satellite scenes found on Copernicus CDSE for '{sid}' at ({lat}, {lon}) "
+                    f"in time window {time_interval}. Please check observation dates."
+                )
+            except Exception as api_err:
+                if attempt < max_retries - 1:
+                    logger.warning(f"Network error downloading '{sid}' ({api_err}). Retrying in 3s (attempt {attempt + 1}/{max_retries})...")
+                    time.sleep(3)
+                else:
+                    logger.error(f"CDSE API request failed for '{sid}' ({lat}, {lon}): {api_err}")
+                    raise RuntimeError(
+                        f"Copernicus CDSE API download failed for '{sid}' at ({lat}, {lon}): {api_err}"
+                    ) from api_err
 
     def _ensure_256x256(self, arr: np.ndarray) -> np.ndarray:
         """Enforces exact (256, 256) spatial dimensions."""
@@ -429,7 +436,20 @@ class SentinelPreprocessor:
         after = eopatch.data_timeless["BANDS_MEDIAN"]
 
         valid_frac = valid.mean(axis=(1, 2))
-        t_cloudiest = int(valid_frac.argmin())
+
+        # Deliverable 1 Requirement:
+        # Enforce that the 'Before' scene has AT LEAST 20-30% clear pixels (valid_frac >= 0.20).
+        # Reject scenes below 20% clear ground (i.e. > 80% clouds/shadows) as overly ambiguous.
+        min_clear_threshold = 0.20
+        eligible_indices = [t for t in range(len(valid_frac)) if valid_frac[t] >= min_clear_threshold]
+
+        if eligible_indices:
+            # Among passes with >= 25-30% clear ground, pick the one with most clouds
+            # to best showcase cloud and shadow masking without excessive occlusion
+            t_chosen = min(eligible_indices, key=lambda t: valid_frac[t])
+        else:
+            # Fallback to the clearest available acquisition if none reach threshold
+            t_chosen = int(valid_frac.argmax())
 
         def to_rgb(arr: np.ndarray, lo: float, hi: float) -> np.ndarray:
             rgb = np.stack([arr[..., 2], arr[..., 1], arr[..., 0]], axis=-1)
@@ -438,10 +458,10 @@ class SentinelPreprocessor:
         ref_rgb = np.stack([after[..., 2], after[..., 1], after[..., 0]], axis=-1)
         lo, hi = np.percentile(ref_rgb, [2, 98])
 
-        before_rgb = to_rgb(bands[t_cloudiest], lo, hi)
+        before_rgb = to_rgb(bands[t_chosen], lo, hi)
         masked_rgb = before_rgb.copy() * 0.45  # Dim background for high-contrast mask visibility
 
-        scl_frame = eopatch.mask["SCL"][t_cloudiest, ..., 0]
+        scl_frame = eopatch.mask["SCL"][t_chosen, ..., 0]
         is_cloud = np.isin(scl_frame, [8, 9, 10])  # Medium prob, high prob, cirrus
         is_shadow = np.isin(scl_frame, [3])        # Cloud shadows
         is_invalid = np.isin(scl_frame, [0, 1])    # Defective / no data
@@ -455,7 +475,7 @@ class SentinelPreprocessor:
 
         after_rgb = to_rgb(after, lo, hi)
 
-        date_str = eopatch.timestamps[t_cloudiest].strftime("%Y-%m-%d")
+        date_str = eopatch.timestamps[t_chosen].strftime("%Y-%m-%d")
         sid = sample["sample_id"]
         c_lat = sample["latitude"]
         c_lon = sample["longitude"]
