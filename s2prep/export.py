@@ -8,7 +8,9 @@ from sentinelhub import CRS, BBox
 
 
 def write_geotiff(arr, bbox, path, band_names=None):
-    """Write [h,w,c] float32 as a north-up GeoTIFF in the bbox's projected CRS (UTM)."""
+    """Write [h,w] or [h,w,c] float32 as a north-up GeoTIFF in the bbox's projected CRS (UTM)."""
+    if arr.ndim == 2:
+        arr = arr[..., None]
     h, w, _ = arr.shape
     sx, sy = (bbox.max_x - bbox.min_x) / w, (bbox.max_y - bbox.min_y) / h
     epsg = bbox.crs.epsg

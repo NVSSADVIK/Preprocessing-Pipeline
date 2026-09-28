@@ -1,0 +1,116 @@
+{
+  "type": "FeatureCollection",
+  "name": "highlands_rectangles",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.6993, 11.4005],
+            [76.7227, 11.4005],
+            [76.7227, 11.4235],
+            [76.6993, 11.4235],
+            [76.6993, 11.4005]
+          ]
+        ]
+      },
+      "properties": {
+        "sample_id": "C_01",
+        "latitude": 11.412,
+        "longitude": 76.711,
+        "start_date": "2026-01-01",
+        "end_date": "2026-03-31"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.7833, 11.3415],
+            [76.8067, 11.3415],
+            [76.8067, 11.3645],
+            [76.7833, 11.3645],
+            [76.7833, 11.3415]
+          ]
+        ]
+      },
+      "properties": {
+        "sample_id": "C_02",
+        "latitude": 11.353,
+        "longitude": 76.795,
+        "start_date": "2026-01-01",
+        "end_date": "2026-03-31"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.8683, 11.4085],
+            [76.8917, 11.4085],
+            [76.8917, 11.4315],
+            [76.8683, 11.4315],
+            [76.8683, 11.4085]
+          ]
+        ]
+      },
+      "properties": {
+        "sample_id": "C_03",
+        "latitude": 11.42,
+        "longitude": 76.88,
+        "start_date": "2026-01-01",
+        "end_date": "2026-03-31"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.7253, 11.3895],
+            [76.7487, 11.3895],
+            [76.7487, 11.4125],
+            [76.7253, 11.4125],
+            [76.7253, 11.3895]
+          ]
+        ]
+      },
+      "properties": {
+        "sample_id": "C_04",
+        "latitude": 11.401,
+        "longitude": 76.737,
+        "start_date": "2026-01-01",
+        "end_date": "2026-03-31"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.5903, 11.4335],
+            [76.6137, 11.4335],
+            [76.6137, 11.4565],
+            [76.5903, 11.4565],
+            [76.5903, 11.4335]
+          ]
+        ]
+      },
+      "properties": {
+        "sample_id": "C_05",
+        "latitude": 11.445,
+        "longitude": 76.602,
+        "start_date": "2026-01-01",
+        "end_date": "2026-03-31"
+      }
+    }
+  ]
+}

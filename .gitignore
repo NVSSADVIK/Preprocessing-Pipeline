@@ -1,4 +1,16 @@
+# Security: Never commit environment variables or secrets
 .env
+*.env
+.env.*
+
+# Output data and caches
+output/
 data/
+cache/
+logs/
+
+# Python & IDE artifacts
 __pycache__/
 *.pyc
+.vscode/
+*.log

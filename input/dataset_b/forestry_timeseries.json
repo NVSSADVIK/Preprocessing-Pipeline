@@ -1,0 +1,37 @@
+[
+  {
+    "sample_id": "B_01",
+    "latitude": 10.325,
+    "longitude": 76.955,
+    "start_date": "2025-01-01",
+    "end_date": "2025-04-30"
+  },
+  {
+    "sample_id": "B_02",
+    "latitude": 10.45,
+    "longitude": 76.88,
+    "start_date": "2025-01-01",
+    "end_date": "2025-04-30"
+  },
+  {
+    "sample_id": "B_03",
+    "latitude": 10.485,
+    "longitude": 76.832,
+    "start_date": "2025-01-01",
+    "end_date": "2025-04-30"
+  },
+  {
+    "sample_id": "B_04",
+    "latitude": 10.97,
+    "longitude": 76.72,
+    "start_date": "2026-01-01",
+    "end_date": "2026-04-30"
+  },
+  {
+    "sample_id": "B_05",
+    "latitude": 10.51,
+    "longitude": 76.98,
+    "start_date": "2026-01-01",
+    "end_date": "2026-04-30"
+  }
+]
