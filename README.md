@@ -160,55 +160,8 @@ v3/
 
 ---
 
-## 5. Security & Git Hygiene (What NOT to Push)
 
-> [!CAUTION]
-> **NEVER push credentials, private API secrets, or heavy satellite raster binaries to public GitHub repositories!**
-
-### Files That Must NOT Be Pushed to Public GitHub:
-1. **`.env` / `.env.local` / `*.env`**:
-   - Contains your private Copernicus CDSE OAuth credentials (`SH_CLIENT_ID`, `SH_CLIENT_SECRET`).
-   - Kept strictly local. Only the sanitized `.env.example` template is committed.
-2. **Heavy Satellite Rasters (`*.tif`, `*.tiff`, `output/**/*.tif`)**:
-   - Float32 GeoTIFF rasters consume large amounts of disk space and violate GitHub file-size limits.
-   - The `.gitignore` is pre-configured to ignore all `*.tif` files while preserving lightweight visual previews (`comparison.jpg`) and `metadata.json`.
-3. **Cache & Temporary Folders**:
-   - `data/`, `cache/`, `logs/`, `scratch/`, `.system_generated/`, `.gemini/`.
-4. **Python & Jupyter Build Artifacts**:
-   - `__pycache__/`, `*.pyc`, `.ipynb_checkpoints/`, `.vscode/`, `.idea/`.
-
-### Verified `.gitignore` Configuration
-The included [`.gitignore`](.gitignore) automatically enforces these rules:
-```gitignore
-# Security: Never commit environment variables or secrets
-.env
-*.env
-.env.*
-.env.local
-!.env.example
-
-# Satellite Data: Ignore heavy GeoTIFF binaries
-*.tif
-*.tiff
-output/**/*.tif
-output/**/*.tiff
-data/
-cache/
-logs/
-
-# Python & IDE artifacts
-__pycache__/
-*.pyc
-.ipynb_checkpoints/
-.vscode/
-.idea/
-.system_generated/
-scratch/
-```
-
----
-
-## 6. Quickstart Guide
+## 5. Quickstart Guide
 
 ### Step 1: Clone Repository & Create Virtual Environment
 ```bash
@@ -257,7 +210,7 @@ python multi_dataset_pipeline.py
 
 ---
 
-## 7. Input Data Specifications & Geometry Rules
+## 6. Input Data Specifications & Geometry Rules
 
 ### Geometry Validation Rules
 The pipeline enforces that all spatial AOIs are **2D RECTANGLES**:
@@ -320,7 +273,7 @@ Must contain a closed 4-corner rectangular Polygon (5 coordinate pairs where fir
 
 ---
 
-## 8. Standardized Output Layout
+## 7. Standardized Output Layout
 
 Each processed sample is saved under `output/<dataset_name>/<sample_id>/`:
 
@@ -337,7 +290,7 @@ Each processed sample is saved under `output/<dataset_name>/<sample_id>/`:
 
 ---
 
-## 9. Validation & Verification Benchmarks
+## 8. Validation & Verification Benchmarks
 
 | Dataset Name | Loader Class | Input Format | Requested | Succeeded | Geometry Enforced | Spatial Dimensions | Success Rate |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
