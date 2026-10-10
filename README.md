@@ -41,8 +41,8 @@ Every processed target produces a 3-panel true-color comparison preview (`compar
 
 ### Deliverable 1: Single Dataset Pipeline Previews
 
-| Sample ID | Coordinates (Lat, Lon) | Terrain / AOI | Acquisition Date | Cloud % | Shadow % | Clear % | Visual Comparison (Before / SCL Mask / After) |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| Sample ID | Coordinates (Lat, Lon) | Terrain / AOI | Acquisition Date | Cloud % | Shadow % | Clear % | 
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **`sample_01`** | `11.0168° N, 76.9558° E` | Urban Core / Coimbatore Railway | 2026-02-21 | 68.2% | 3.9% | **27.9%** | 
 | **`sample_02`** | `10.9675° N, 76.9125° E` | Suburban / Agricultural Mosaic | 2026-02-21 | 58.1% | 0.5% | **41.3%** |
 | **`sample_03`** | `11.0022° N, 77.0210° E` | Eastern Urban / Water Basin | 2026-01-22 | 0.0% | 0.0% | **100.0%** | 
