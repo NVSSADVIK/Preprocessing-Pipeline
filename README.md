@@ -43,11 +43,11 @@ Every processed target produces a 3-panel true-color comparison preview (`compar
 
 | Sample ID | Coordinates (Lat, Lon) | Terrain / AOI | Acquisition Date | Cloud % | Shadow % | Clear % | Visual Comparison (Before / SCL Mask / After) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **`sample_01`** | `11.0168° N, 76.9558° E` | Urban Core / Coimbatore Railway | 2026-02-21 | 68.2% | 3.9% | **27.9%** | ![sample_01](docs/images/single_dataset_sample_01.jpg) |
-| **`sample_02`** | `10.9675° N, 76.9125° E` | Suburban / Agricultural Mosaic | 2026-02-21 | 58.1% | 0.5% | **41.3%** | ![sample_02](docs/images/single_dataset_sample_02.jpg) |
-| **`sample_03`** | `11.0022° N, 77.0210° E` | Eastern Urban / Water Basin | 2026-01-22 | 0.0% | 0.0% | **100.0%** | ![sample_03](docs/images/single_dataset_sample_03.jpg) |
-| **`sample_04`** | `11.0450° N, 76.8520° E` | Western Ghats Mountain Slopes | 2026-02-21 | 33.5% | 18.7% | **47.8%** | ![sample_04](docs/images/single_dataset_sample_04.jpg) |
-| **`sample_05`** | `11.0250° N, 77.1250° E` | Agricultural Plains & Reservoir | 2026-02-01 | 0.0% | 0.0% | **100.0%** | ![sample_05](docs/images/single_dataset_sample_05.jpg) |
+| **`sample_01`** | `11.0168° N, 76.9558° E` | Urban Core / Coimbatore Railway | 2026-02-21 | 68.2% | 3.9% | **27.9%** | 
+| **`sample_02`** | `10.9675° N, 76.9125° E` | Suburban / Agricultural Mosaic | 2026-02-21 | 58.1% | 0.5% | **41.3%** |
+| **`sample_03`** | `11.0022° N, 77.0210° E` | Eastern Urban / Water Basin | 2026-01-22 | 0.0% | 0.0% | **100.0%** | 
+| **`sample_04`** | `11.0450° N, 76.8520° E` | Western Ghats Mountain Slopes | 2026-02-21 | 33.5% | 18.7% | **47.8%** | 
+| **`sample_05`** | `11.0250° N, 77.1250° E` | Agricultural Plains & Reservoir | 2026-02-01 | 0.0% | 0.0% | **100.0%** |
 
 ---
 
